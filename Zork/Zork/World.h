@@ -12,7 +12,7 @@ public:
     World();
     ~World();
 
-    void ExecuteCommand(const vector<string>& command);
+    bool ExecuteCommand(const vector<string>& command);
 private:
     list<Entity*> m_Entities;
     Player* m_Player;

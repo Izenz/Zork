@@ -6,7 +6,9 @@ using namespace std;
 
 enum class itemType {
     CHEST,
-    KEY
+    KEY,
+    OBJECT,
+    GEAR
 };
 
 class Item : public Entity {

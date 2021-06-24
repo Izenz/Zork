@@ -41,6 +41,10 @@ World::World() {
     Item* dungeonKey = new Item("Key", "It looks old and is heavy.", gbasement, itemType::KEY);
     Item* welcomeChest = new Item("Chest", "looks like someone dropped it.", lhouse, itemType::CHEST);
 
+    Item* welcomeRing = new Item("Ring", "It's a silver ring.", welcomeChest, itemType::GEAR);
+    Item* silverCoin = new Item("Coin", "It's a coin made of silver.", welcomeChest, itemType::OBJECT);
+    Item* testItem = new Item("Test", "thi is the 3rd item.", welcomeChest, itemType::OBJECT);
+
     // Creatures
     m_Player = new Player("", "", gmeadow, playerHp, playerAtk);
     m_Entities.push_back(m_Player);
@@ -53,7 +57,8 @@ World::~World() {
     m_Entities.clear();
 }
 
-void World::ExecuteCommand(const vector<string>& command){
+bool World::ExecuteCommand(const vector<string>& command){
+
     switch (command.size()) {
     case 1:
         if (!_stricmp(command[0].c_str(), "look")) {
@@ -61,6 +66,9 @@ void World::ExecuteCommand(const vector<string>& command){
         }
         else if (!_stricmp(command[0].c_str(), "inventory")) {
             m_Player->ShowInventory();
+        }
+        else if (!_stricmp(command[0].c_str(), "quit")) {
+            return false;
         }
         else {
             cout << "Try to be more specific." << endl;
@@ -97,6 +105,13 @@ void World::ExecuteCommand(const vector<string>& command){
                 cout << "Such item does not exist in this room." << endl;
             }
         }
+        else if (!_stricmp(command[0].c_str(), "open")) {
+            if (m_Player->Open(command)) {
+            }
+            else {
+                cout << "You dont have that item in you." << endl;
+            }
+        }
         else {
             cout << "I did not understand that command." << endl;
         }
@@ -104,4 +119,6 @@ void World::ExecuteCommand(const vector<string>& command){
     default:
         cout << "I did not understand that." << endl;
     }
+
+    return true;
 }

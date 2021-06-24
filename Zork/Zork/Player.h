@@ -11,6 +11,7 @@ public:
     bool Go(const vector<string>& command);
     bool Drop(const vector<string>& command);
     bool Take(const vector<string>& command);
+    bool Open(const vector<string>& command);
     bool Look(const vector<string>& command) const ;
     void Look() const;
     void Update() override;

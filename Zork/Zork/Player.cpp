@@ -75,6 +75,16 @@ bool Player::Look(const vector<string>& command) const {
     
 }
 
+bool Player::Open(const vector<string>& command) {
+    Item* itemToOpen = (Item*)Find(command[1]);
+    if (itemToOpen != NULL) {
+        itemToOpen->OpenChest();
+        return true;
+    }
+    else
+        return false;
+}
+
 void Player::Look() const {
     cout << m_CurrentLocation->m_Name << endl;
     cout << m_CurrentLocation->m_Description << endl;

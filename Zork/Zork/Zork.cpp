@@ -9,6 +9,7 @@ int main()
 {
     World world;
     string playerInput;
+    bool isGameLoopActive = true;
     vector<string> command;
     command.reserve(5);
 
@@ -17,7 +18,7 @@ int main()
     world.ExecuteCommand(command);
 
 
-    while (true)
+    while (isGameLoopActive)
     {
         playerInput.clear();
         command.clear();
@@ -31,7 +32,7 @@ int main()
 
         Tokenize(playerInput, command);
 
-        world.ExecuteCommand(command);
+        isGameLoopActive = world.ExecuteCommand(command);
     }
 
 }
