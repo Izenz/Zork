@@ -34,7 +34,7 @@ Entity* Entity::Find(const string& name, const entityType type)  const {
 }
 
 void Entity::FindAll(const entityType type, list<Entity*>& entitiesFound) const {
-    for (Entity* entity : entitiesFound) {
+    for (Entity* entity : m_ContainedEntities) {
         if (entity->m_Type == type) {
             entitiesFound.push_back(entity);
         }

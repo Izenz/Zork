@@ -41,13 +41,11 @@ bool Player::Take(const vector<string>& command) {
     Item* objectToTake = (Item*)m_CurrentLocation->Find(command[1], entityType::ITEM);
 
     if (objectToTake == NULL) {
-        cout << "Such item does not exist in this room" << endl;
         return false;
     }
     else {
         objectToTake->ChangeParent(this);
         return true;
-        cout << "Taken. " + objectToTake->m_Name + " added to player's inventory." << endl;
     }
     
 }
@@ -57,11 +55,9 @@ bool Player::Drop(const vector<string>& command) {
     Item* objectToDrop = (Item*)Find(command[1], entityType::ITEM);
 
     if (objectToDrop == NULL) {
-        cout << "Such item does not exist in your inventory" << endl;
         return false;
     }
     else {
-        cout << "Dropped " << objectToDrop->m_Name << "into the ground." << endl;
         objectToDrop->ChangeParent(m_CurrentLocation);
         return true;
     }
@@ -69,10 +65,14 @@ bool Player::Drop(const vector<string>& command) {
 
 bool Player::Look(const vector<string>& command) const {
     Entity* entityToLook = Find(command[1]);
+    if (entityToLook != NULL) {
+        cout << entityToLook->m_Name << endl;
+        cout << entityToLook->m_Description << endl;
+        return true;
+    }
+    else
+        return false;
     
-    cout << entityToLook->m_Name << endl;
-    cout << entityToLook->m_Description << endl;
-    return true;
 }
 
 void Player::Look() const {

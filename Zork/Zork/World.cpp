@@ -3,6 +3,7 @@
 #include "Creature.h"
 #include "Room.h"
 #include "Exit.h"
+#include "Item.h"
 #include "Player.h"
 #include <iostream>
 using namespace std;
@@ -24,19 +25,21 @@ World::World() {
     m_Entities.push_back(sdungeon);
 
     // Exits
-    Exit* mountToMeadow = new Exit("Mountain path", "asd", mountains, gmeadow, "east", mountains);
+    Exit* mountToMeadow = new Exit("Mountain path", "", mountains, gmeadow, "east", mountains);
     Exit* meadowToMount = new Exit("Mountain path", "", gmeadow, mountains, "west", gmeadow);
 
-    Exit* meadowToHouse = new Exit("Muddy road", "asd", gmeadow, lhouse, "east", gmeadow);
+    Exit* meadowToHouse = new Exit("Muddy road", "", gmeadow, lhouse, "east", gmeadow);
     Exit* houseToMeadow = new Exit("Muddy road", "", lhouse, gmeadow, "west", lhouse);
 
-    Exit* houseToBasem = new Exit("House stairs", "asd", lhouse, gbasement, "north", lhouse);
+    Exit* houseToBasem = new Exit("House stairs", "", lhouse, gbasement, "north", lhouse);
     Exit* basemToHouse = new Exit("House stairs", "", gbasement, lhouse, "south", gbasement);
 
-    Exit* mountToDung = new Exit("Mountain cave", "asd", mountains, sdungeon, "north", mountains);
+    Exit* mountToDung = new Exit("Mountain cave", "", mountains, sdungeon, "north", mountains);
     Exit* DungToMount = new Exit("Mountain cave", "", sdungeon, mountains, "south", sdungeon);
 
     // Items
+    Item* dungeonKey = new Item("Key", "It looks old and is heavy.", gbasement, itemType::KEY);
+    Item* welcomeChest = new Item("Chest", "looks like someone dropped it.", lhouse, itemType::CHEST);
 
     // Creatures
     m_Player = new Player("", "", gmeadow, playerHp, playerAtk);
@@ -74,16 +77,28 @@ void World::ExecuteCommand(const vector<string>& command){
             }
         }
         else if (!_stricmp(command[0].c_str(), "look")) {
-            m_Player->Look(command);
+            if (m_Player->Look(command)) {}
+            else
+                cout << "You don't see anything like that around." << endl;
         }
         else if (!_stricmp(command[0].c_str(), "drop")) {
-            m_Player->Drop(command);
+            if (m_Player->Drop(command)) {
+                cout << "Dropped. " << endl;
+            }
+            else {
+                cout << "You dont have that item in you." << endl;
+            }
         }
         else if (!_stricmp(command[0].c_str(), "take")) {
-            m_Player->Take(command);
+            if (m_Player->Take(command)) {
+                cout << "Taken." << endl;
+            }
+            else {
+                cout << "Such item does not exist in this room." << endl;
+            }
         }
         else {
-            cout << "Did you say anything?." << endl;
+            cout << "I did not understand that command." << endl;
         }
         break;
     default:
