@@ -116,8 +116,17 @@ bool World::ExecuteCommand(const vector<string>& command){
             cout << "I did not understand that command." << endl;
         }
         break;
+    case 4:
+        if ((!_stricmp(command[0].c_str(), "store") && (!_stricmp(command[2].c_str(), "in")))) {
+            if (m_Player->Store(command)) {}
+            else {
+                cout << "You can not do that." << endl;
+            }
+        }
+        break;
     default:
         cout << "I did not understand that." << endl;
+        break;
     }
 
     return true;

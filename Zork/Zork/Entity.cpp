@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include <iostream>
+#include "Item.h"
 using namespace std;
 
 Entity::Entity(const string& name, const string& description, entityType type, Entity* parent) {

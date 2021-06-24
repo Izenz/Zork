@@ -13,6 +13,7 @@ public:
     bool Take(const vector<string>& command);
     bool Open(const vector<string>& command);
     bool Look(const vector<string>& command) const ;
+    bool Store(const vector<string>& command);
     void Look() const;
     void Update() override;
     

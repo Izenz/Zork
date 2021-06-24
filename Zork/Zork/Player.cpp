@@ -85,6 +85,20 @@ bool Player::Open(const vector<string>& command) {
         return false;
 }
 
+bool Player::Store(const vector<string>& command) {
+    Item* itemToStore = (Item*)Find(command[1]);
+    Item* storageItem = (Item*)Find(command[3]);
+
+    if (itemToStore != NULL && storageItem != NULL && storageItem->m_ItemType == itemType::CHEST) {
+        itemToStore->ChangeParent(storageItem);
+        cout << "You stored " << itemToStore->m_Name << " inside " << storageItem->m_Name << endl;
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 void Player::Look() const {
     cout << m_CurrentLocation->m_Name << endl;
     cout << m_CurrentLocation->m_Description << endl;
