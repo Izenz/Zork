@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Item.h"
 #include "Room.h"
+#include "Exit.h"
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -25,7 +26,14 @@ void Player::ShowInventory() const {
 
 bool Player::Go(const vector<string>& command) {
     Exit* chosenPath = (Exit*)m_CurrentLocation->GetExit(command[1]);
-    return true;
+
+    if (chosenPath != NULL) {
+        ChangeParent(chosenPath->m_Destination);
+        m_CurrentLocation = chosenPath->m_Destination;
+        return true;
+    }
+    else
+        return false;
 }
 
 bool Player::Take(const vector<string>& command) {

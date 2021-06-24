@@ -14,6 +14,5 @@ public:
     bool Look(const vector<string>& command) const ;
     void Look() const;
     void Update() override;
-private:
     
 };

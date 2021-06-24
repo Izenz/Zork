@@ -27,8 +27,8 @@ World::World() {
     Exit* mountToMeadow = new Exit("Mountain path", "asd", mountains, gmeadow, "east", mountains);
     Exit* meadowToMount = new Exit("Mountain path", "", gmeadow, mountains, "west", gmeadow);
 
-    Exit* meadowToHouse = new Exit("Muddy road", "asd", gmeadow, lhouse, "west", gmeadow);
-    Exit* houseToMeadow = new Exit("Muddy road", "", lhouse, gmeadow, "east", lhouse);
+    Exit* meadowToHouse = new Exit("Muddy road", "asd", gmeadow, lhouse, "east", gmeadow);
+    Exit* houseToMeadow = new Exit("Muddy road", "", lhouse, gmeadow, "west", lhouse);
 
     Exit* houseToBasem = new Exit("House stairs", "asd", lhouse, gbasement, "north", lhouse);
     Exit* basemToHouse = new Exit("House stairs", "", gbasement, lhouse, "south", gbasement);
@@ -65,7 +65,13 @@ void World::ExecuteCommand(const vector<string>& command){
         break;
     case 2:
         if (!_stricmp(command[0].c_str(), "go")) {
-            m_Player->Go(command);
+            if (m_Player->Go(command)) {
+                cout << "You traveled to: " << m_Player->m_CurrentLocation->m_Name << endl;
+                cout << m_Player->m_CurrentLocation->m_Description << endl;
+            }
+            else {
+                cout << "There's nothing there." << endl;
+            }
         }
         else if (!_stricmp(command[0].c_str(), "look")) {
             m_Player->Look(command);

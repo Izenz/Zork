@@ -10,7 +10,6 @@ public:
     void Look() const;
     void Attack(const int& attackPower);
     bool IsAlive() const;
-protected:
 
     Room* m_CurrentLocation;
 

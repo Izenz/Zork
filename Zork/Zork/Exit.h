@@ -10,10 +10,8 @@ public:
 	~Exit();
 	string GetExitDirection() const;
 	void Update() override;
-private:
 	
 	Room* m_Source;
 	Room* m_Destination;
 	string m_Direction;
-	
 };

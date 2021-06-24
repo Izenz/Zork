@@ -23,7 +23,7 @@ int main()
         command.clear();
 
         cout << "> ";
-        cin >> playerInput;
+        getline(cin, playerInput);
 
         for_each(playerInput.begin(), playerInput.end(), [](char& c) {
             c = tolower(c);
