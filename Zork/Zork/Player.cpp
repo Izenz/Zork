@@ -64,15 +64,25 @@ bool Player::Drop(const vector<string>& command) {
 }
 
 bool Player::Look(const vector<string>& command) const {
+    // Try looking items on inventory
     Entity* entityToLook = Find(command[1]);
     if (entityToLook != NULL) {
         cout << entityToLook->m_Name << endl;
         cout << entityToLook->m_Description << endl;
         return true;
     }
-    else
-        return false;
-    
+    else {
+        // Try looking on current room
+        entityToLook = m_CurrentLocation->Find(command[1]);
+        if (entityToLook != NULL) {
+            cout << entityToLook->m_Name << endl;
+            cout << entityToLook->m_Description << endl;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
 
 bool Player::Open(const vector<string>& command) {
