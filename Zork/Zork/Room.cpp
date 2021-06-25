@@ -5,8 +5,8 @@
 #include <vector>
 using namespace std;
 
-void Room::AddEntityToRoom(Entity* child) {
-    m_ContainedEntities.push_back(child);
+Room::~Room() {
+
 }
 
 void Room::Look() {
@@ -24,8 +24,4 @@ Exit* Room::GetExit(const string& orientation) {
         }
     }
     return nullptr;
-}
-
-void Room::Update() {
-
 }

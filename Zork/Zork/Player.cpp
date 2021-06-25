@@ -189,7 +189,3 @@ bool Player::IsInInventory(const Item* itemToFind) const {
     }
     return false;
 }
-
-void Player::Update() {
-
-}

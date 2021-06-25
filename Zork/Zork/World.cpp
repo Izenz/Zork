@@ -9,7 +9,6 @@
 using namespace std;
 
 World::World() {
-    int playerHp = 20, playerAtk = 5;
 
     // Rooms
     Room* mountains = new Room("Mountain Range", "Up in the mountains you leave behind a magnificent view of the meadow and what seems to be a small house past it.\nYou keep exploring the mountains and you see a cave to the north.\nInside the cave you see a huge, ancient door. It's locked.");
@@ -46,15 +45,15 @@ World::World() {
     Item* silverCoin = new Item("Coin", "It's a coin made of silver.", woodenChest, itemType::OBJECT);
 
     // Creatures
-    m_Player = new Player("Treasure hunter", "Looking for treasure and adventure!", gmeadow, playerHp, playerAtk);
+    m_Player = new Player("Treasure hunter", "Looking for treasure and adventure!", gmeadow);
     m_Entities.push_back(m_Player);
 }
 
 World::~World() {
-    for (Entity* entity : m_Entities) {
+    /*for (Entity* entity : m_Entities) {
         delete entity;
     }
-    m_Entities.clear();
+    m_Entities.clear();*/
 }
 
 bool World::ExecuteCommand(const vector<string>& command){

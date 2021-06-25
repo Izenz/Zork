@@ -52,10 +52,6 @@ void Entity::ChangeParent(Entity* new_parent) {
     
 }
 
-void Entity::Update() {
-
-}
-
 void Entity::Look() const {
     cout << "You can not look at " << m_Name << endl;
 }
@@ -74,14 +70,6 @@ void Entity::Drop() {
 
 void Entity::Put(Entity* container) {
     cout << "You can not put " << m_Name << "into " << container->m_Name << endl;
-}
-
-void Entity::Talk() {
-    cout << "You can not talk to " << m_Name << endl;
-}
-
-void Entity::Attack() {
-    cout << "You can not attack " << m_Name << endl;
 }
 
 void Entity::Go() {

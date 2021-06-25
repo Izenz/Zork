@@ -4,5 +4,6 @@ using namespace std;
 
 class NPC : Creature {
 public:
+    ~NPC();
 private:
 };

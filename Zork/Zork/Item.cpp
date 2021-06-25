@@ -28,7 +28,3 @@ bool Item::OpenChest() {
         return false;
     }
 }
-
-bool Item::UseKey() const {
-    return true;
-}

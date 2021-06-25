@@ -25,15 +25,12 @@ public:
     virtual void Take();
     virtual void Drop();
     virtual void Put(Entity* container);
-    virtual void Talk();
-    virtual void Attack();
     virtual void Go();
 
     Entity* Find(const string& name) const;
     Entity* Find(const string& name, entityType type) const;
     void FindAll(const entityType type, list<Entity*>& entitiesFound) const;
     void ChangeParent(Entity* new_parent);
-    virtual void Update();
 
     string m_Name;
     string m_Description;

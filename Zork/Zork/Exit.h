@@ -10,7 +10,6 @@ public:
 	Exit(const string name, const string desc, Room* source, Room* destination, const string& dir, Entity* parent, bool locked, Item* exitKey) : m_Source(source), m_Destination(destination), m_Direction(dir), m_IsLocked(locked), m_ExitKey(exitKey), Entity(name, desc, entityType::EXIT, parent) {};
 	~Exit();
 	string GetExitDirection() const;
-	void Update() override;
 	void LockExit();
 	void UnlockExit();
 	

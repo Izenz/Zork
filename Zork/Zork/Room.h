@@ -15,9 +15,7 @@ enum class exitTypes
 class Room : public Entity {
 public:
     Room(const string name, const string desc) : Entity(name, desc, entityType::ROOM) {};
-    void AddEntityToRoom(Entity* child);
+    ~Room();
     Exit* GetExit(const string& orientation);
     void Look();
-    void Update() override;
-private:
 };

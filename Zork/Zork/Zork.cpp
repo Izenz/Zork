@@ -10,13 +10,13 @@ int main()
     World world;
     string playerInput;
     bool isGameLoopActive = true;
+
     vector<string> command;
     command.reserve(5);
 
     cout << "Welcome to Zork!" << endl;
     command.push_back("look");
     world.ExecuteCommand(command);
-
 
     while (isGameLoopActive)
     {
@@ -35,5 +35,7 @@ int main()
         isGameLoopActive = world.ExecuteCommand(command);
     }
 
+    cout << "Thank you for playing! Did you find the treasure?" << endl;
+    return 0;
 }
 

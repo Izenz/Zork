@@ -17,8 +17,6 @@ public:
     ~Item();
 
     bool OpenChest();
-    bool UseKey() const;
 
     itemType m_ItemType;
-private:
 };

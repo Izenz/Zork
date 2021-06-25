@@ -19,9 +19,3 @@ void Exit::UnlockExit() {
     m_IsLocked = false;
     cout << m_Name << " is now open." << endl;
 }
-
-
-void Exit::Update() {
-
-}
-
