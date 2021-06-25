@@ -24,21 +24,22 @@ World::World() {
     m_Entities.push_back(gbasement);
     m_Entities.push_back(sdungeon);
 
-    // Exits
-    Exit* mountToMeadow = new Exit("Mountain path", "A path going up the mountains, it's going to be a long walk...", mountains, gmeadow, "east", mountains);
-    Exit* meadowToMount = new Exit("Mountain path", "A path going up the mountains, it's going to be a long walk...", gmeadow, mountains, "west", gmeadow);
+    // Exits & Keys
+    Exit* mountToMeadow = new Exit("Mountain path", "A path going up the mountains, it's going to be a long walk...", mountains, gmeadow, "east", mountains, false, nullptr);
+    Exit* meadowToMount = new Exit("Mountain path", "A path going up the mountains, it's going to be a long walk...", gmeadow, mountains, "west", gmeadow, false, nullptr);
 
-    Exit* meadowToHouse = new Exit("Muddy road", "A muddy road, looks like it rained not long ago.", gmeadow, lhouse, "east", gmeadow);
-    Exit* houseToMeadow = new Exit("Muddy road", "A muddy road, looks like it rained not long ago.", lhouse, gmeadow, "west", lhouse);
+    Exit* meadowToHouse = new Exit("Muddy road", "A muddy road, looks like it rained not long ago.", gmeadow, lhouse, "east", gmeadow, false, nullptr);
+    Exit* houseToMeadow = new Exit("Muddy road", "A muddy road, looks like it rained not long ago.", lhouse, gmeadow, "west", lhouse, false, nullptr);
 
-    Exit* houseToBasem = new Exit("House stairs", "Stairs going down", lhouse, gbasement, "north", lhouse);
-    Exit* basemToHouse = new Exit("House stairs", "Stairs going down", gbasement, lhouse, "south", gbasement);
+    Exit* houseToBasem = new Exit("House stairs", "Stairs going down", lhouse, gbasement, "north", lhouse, false, nullptr);
+    Exit* basemToHouse = new Exit("House stairs", "Stairs going down", gbasement, lhouse, "south", gbasement, false, nullptr);
 
-    Exit* mountToDung = new Exit("Mountain cave", "A small cave with a huge door made of stone.", mountains, sdungeon, "north", mountains);
-    Exit* DungToMount = new Exit("Mountain cave", "A small cave with a huge door made of stone.", sdungeon, mountains, "south", sdungeon);
+    Item* dungeonKey = new Item("Key", "It looks old and is heavy.", gbasement, itemType::KEY);
+
+    Exit* mountToDung = new Exit("Mountain cave", "A small cave with a huge door made of stone.", mountains, sdungeon, "north", mountains, true, dungeonKey);
+    Exit* DungToMount = new Exit("Mountain cave", "A small cave with a huge door made of stone.", sdungeon, mountains, "south", sdungeon, false, dungeonKey);
 
     // Items
-    Item* dungeonKey = new Item("Key", "It looks old and is heavy.", gbasement, itemType::KEY);
     Item* woodenChest = new Item("Chest", "It's a chest made of wood, it is not locked.", lhouse, itemType::CHEST);
 
     Item* welcomeRing = new Item("Ring", "It's a silver ring.", woodenChest, itemType::GEAR);
@@ -80,7 +81,7 @@ bool World::ExecuteCommand(const vector<string>& command){
                 cout << m_Player->m_CurrentLocation->m_Description << endl;
             }
             else {
-                cout << "There's nothing there." << endl;
+                cout << " You didn't move." << endl;
             }
         }
         else if (!_stricmp(command[0].c_str(), "look")) {
@@ -110,6 +111,12 @@ bool World::ExecuteCommand(const vector<string>& command){
             else {
                 cout << "You dont have that item in you." << endl;
             }
+        }
+        else if (!_stricmp(command[0].c_str(), "lock")) {
+            if (m_Player->Lock(command)) {}
+        }
+        else if (!_stricmp(command[0].c_str(), "unlock")) {
+            if (m_Player->Unlock(command)) {}
         }
         else {
             cout << "I did not understand that command." << endl;

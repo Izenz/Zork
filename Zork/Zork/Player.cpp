@@ -28,12 +28,21 @@ bool Player::Go(const vector<string>& command) {
     Exit* chosenPath = (Exit*)m_CurrentLocation->GetExit(command[1]);
 
     if (chosenPath != NULL) {
-        ChangeParent(chosenPath->m_Destination);
-        m_CurrentLocation = chosenPath->m_Destination;
+        if (chosenPath->m_IsLocked) {
+            cout << "The door is locked.";
+            return false;
+        }
+        else{
+            ChangeParent(chosenPath->m_Destination);
+            m_CurrentLocation = chosenPath->m_Destination;
+        }
         return true;
     }
-    else
+    else {
+        cout << "There's nothing there.";
         return false;
+    }
+        
 }
 
 bool Player::Take(const vector<string>& command) {
@@ -85,6 +94,60 @@ bool Player::Look(const vector<string>& command) const {
     }
 }
 
+bool Player::Lock(const vector<string>& command) const {
+    Exit* chosenPath = (Exit*)m_CurrentLocation->GetExit(command[1]);
+    bool hasKey = false;
+    if (chosenPath != NULL) {
+        if (chosenPath->m_ExitKey != NULL)
+            hasKey = IsInInventory(chosenPath->m_ExitKey);
+
+        if (!chosenPath->m_IsLocked) {
+            if (hasKey) {
+                chosenPath->LockExit();
+            }
+            else {
+                cout << "You dont have the key to this exit." << endl;
+                return false;
+            }
+        }
+        else {
+            cout << "This exit is already locked." << endl;
+            return false;
+        }
+    }
+    else {
+        cout << "There's nothing there." << endl;
+        return false;
+    }
+}
+
+bool Player::Unlock(const vector<string>& command) const {
+    Exit* chosenPath = (Exit*)m_CurrentLocation->GetExit(command[1]);
+    bool hasKey = false;
+    if (chosenPath != NULL) {
+        if (chosenPath->m_ExitKey != NULL)
+            hasKey = IsInInventory(chosenPath->m_ExitKey);
+
+        if (chosenPath->m_IsLocked) {
+            if (hasKey) {
+                chosenPath->UnlockExit();
+            }
+            else {
+                cout << "You dont have the key to this exit." << endl;
+                return false;
+            }
+        }
+        else {
+            cout << "This exit is already unlocked." << endl;
+            return false;
+        }
+    }
+    else {
+        cout << "There's nothing there." << endl;
+        return false;
+    }
+}
+
 bool Player::Open(const vector<string>& command) {
     Item* itemToOpen = (Item*)Find(command[1]);
     if (itemToOpen != NULL) {
@@ -99,7 +162,11 @@ bool Player::Store(const vector<string>& command) {
     Item* itemToStore = (Item*)Find(command[1]);
     Item* storageItem = (Item*)Find(command[3]);
 
-    if (itemToStore != NULL && storageItem != NULL && storageItem->m_ItemType == itemType::CHEST) {
+    if (!_stricmp(command[1].c_str(), command[3].c_str())) {
+        cout << "Are you trying to store an object inside itself?. ";
+        return false;
+    }
+    else if (itemToStore != NULL && storageItem != NULL && storageItem->m_ItemType == itemType::CHEST) {
         itemToStore->ChangeParent(storageItem);
         cout << "You stored " << itemToStore->m_Name << " inside " << storageItem->m_Name << endl;
         return true;
@@ -112,6 +179,15 @@ bool Player::Store(const vector<string>& command) {
 void Player::Look() const {
     cout << m_CurrentLocation->m_Name << endl;
     cout << m_CurrentLocation->m_Description << endl;
+}
+
+bool Player::IsInInventory(const Item* itemToFind) const {
+    for (Entity* item : m_ContainedEntities) {
+        if (item->m_Name == itemToFind->m_Name) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void Player::Update() {
